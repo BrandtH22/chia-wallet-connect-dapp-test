@@ -92,13 +92,14 @@ interface IContext {
     testSignTransactions: TRpcRequestCallback;
   };
   chiaRpc: {
-    testSendTransaction: TRpcRequestCallback,
-    testNewAddress: TRpcRequestCallback,
-    testLogIn: TRpcRequestCallback,
-    testSignMessageByAddress: TRpcRequestCallback,
-    testSignMessageById: TRpcRequestCallback,
-    testGetWalletSyncStatus: TRpcRequestCallback,
-  },
+    testSendTransaction: TRpcRequestCallback;
+    testSpendCAT: TRpcRequestCallback;
+    testNewAddress: TRpcRequestCallback;
+    testLogIn: TRpcRequestCallback;
+    testSignMessageByAddress: TRpcRequestCallback;
+    testSignMessageById: TRpcRequestCallback;
+    testGetWalletSyncStatus: TRpcRequestCallback;
+  };
   rpcResult?: IFormattedRpcResponse | null;
   isRpcRequestPending: boolean;
   isTestnet: boolean;
@@ -753,9 +754,40 @@ export function JsonRpcContextProvider({
             method,
             params: {
               fingerprint: address,
-              address: 'txch1l8pwa9v3kphxr50vtgpc0dz2atvemryxzlngav9xnraxm39cxt2sxvpe3m',
-              amount: '10',
-              fee: '1',
+              address:
+                "txch1l8pwa9v3kphxr50vtgpc0dz2atvemryxzlngav9xnraxm39cxt2sxvpe3m",
+              amount: "10",
+              fee: "1",
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    testSpendCAT: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_SPEND_CAT;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              walletId: 17,
+              address:
+                "txch1tnevlkzj9tlg84prxs4674pjtrzepuw2cqr0zg6qud8nfj0nk9yql3umcu",
+              amount: "1000",
+              fee: "6500000",
             },
           },
         });
@@ -831,8 +863,9 @@ export function JsonRpcContextProvider({
             method,
             params: {
               fingerprint: address,
-              message: 'This is a testsign in message by address',
-              address: 'txch1l8pwa9v3kphxr50vtgpc0dz2atvemryxzlngav9xnraxm39cxt2sxvpe3m',
+              message: "This is a testsign in message by address",
+              address:
+                "txch1l8pwa9v3kphxr50vtgpc0dz2atvemryxzlngav9xnraxm39cxt2sxvpe3m",
             },
           },
         });
@@ -858,8 +891,8 @@ export function JsonRpcContextProvider({
             method,
             params: {
               fingerprint: address,
-              message: 'This is a test sign in message by id',
-              id: 'nft1049g9t9ts9qrc9nsd7ta0kez847le6wz59d28zrkrmhj8xu7ucgq7uqa7z',
+              message: "This is a test sign in message by id",
+              id: "nft1049g9t9ts9qrc9nsd7ta0kez847le6wz59d28zrkrmhj8xu7ucgq7uqa7z",
             },
           },
         });
@@ -877,7 +910,7 @@ export function JsonRpcContextProvider({
         chainId: string,
         address: string
       ): Promise<IFormattedRpcResponse> => {
-        const method = DEFAULT_CHIA_METHODS.CHIA_GET_WALLET_SYNC_STATUS
+        const method = DEFAULT_CHIA_METHODS.CHIA_GET_WALLET_SYNC_STATUS;
         const result = await client!.request({
           topic: session!.topic,
           chainId,
@@ -897,9 +930,6 @@ export function JsonRpcContextProvider({
         };
       }
     ),
-
-    
-    
   };
 
   // -------- NEAR RPC METHODS --------

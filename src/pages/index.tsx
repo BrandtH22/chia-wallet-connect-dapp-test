@@ -250,6 +250,11 @@ const Home: NextPage = () => {
       await chiaRpc.testSendTransaction(chainId, address);
     };
 
+    const onSpendCAT = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testSpendCAT(chainId, address);
+    };
+
     const onNewAddress = async (chainId: string, address: string) => {
       openRequestModal();
       await chiaRpc.testNewAddress(chainId, address);
@@ -275,12 +280,14 @@ const Home: NextPage = () => {
       await chiaRpc.testGetWalletSyncStatus(chainId, address);
     };
 
-    
-
     return [
       {
         method: DEFAULT_CHIA_METHODS.CHIA_SEND_TRANSACTION,
         callback: onSendTransaction,
+      },
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_SPEND_CAT,
+        callback: onSpendCAT,
       },
       {
         method: DEFAULT_CHIA_METHODS.CHIA_NEW_ADDRESS,
@@ -304,7 +311,6 @@ const Home: NextPage = () => {
       },
     ];
   };
-
 
   const getElrondActions = (): AccountAction[] => {
     const onSignTransaction = async (chainId: string, address: string) => {

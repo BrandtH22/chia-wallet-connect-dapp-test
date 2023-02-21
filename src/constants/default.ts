@@ -77,15 +77,15 @@ export enum DEFAULT_SOLANA_METHODS {
 
 export enum DEFAULT_CHIA_METHODS {
   CHIA_SEND_TRANSACTION = "chia_sendTransaction",
+  CHIA_SPEND_CAT = "chia_spendCAT",
   CHIA_NEW_ADDRESS = "chia_getNextAddress",
-  CHIA_LOG_IN = 'chia_logIn',
-  CHIA_SIGN_MESSAGE_BY_ADDRESS = 'chia_signMessageByAddress',
-  CHIA_SIGN_MESSAGE_BY_ID = 'chia_signMessageById',
-  CHIA_GET_WALLET_SYNC_STATUS = 'chia_getSyncStatus',
+  CHIA_LOG_IN = "chia_logIn",
+  CHIA_SIGN_MESSAGE_BY_ADDRESS = "chia_signMessageByAddress",
+  CHIA_SIGN_MESSAGE_BY_ID = "chia_signMessageById",
+  CHIA_GET_WALLET_SYNC_STATUS = "chia_getSyncStatus",
 }
 
 export enum DEFAULT_CHIA_EVENTS {}
-
 
 export enum DEFAULT_SOLANA_EVENTS {}
 
