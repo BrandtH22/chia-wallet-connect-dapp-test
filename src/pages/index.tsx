@@ -280,6 +280,11 @@ const Home: NextPage = () => {
       await chiaRpc.testGetWalletSyncStatus(chainId, address);
     };
 
+    const onGetNFTs = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testGetNFTs(chainId, address);
+    };
+
     return [
       {
         method: DEFAULT_CHIA_METHODS.CHIA_SEND_TRANSACTION,
@@ -308,6 +313,10 @@ const Home: NextPage = () => {
       {
         method: DEFAULT_CHIA_METHODS.CHIA_GET_WALLET_SYNC_STATUS,
         callback: onGetWalletSyncStatus,
+      },
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_GET_NFTS,
+        callback: onGetNFTs,
       },
     ];
   };

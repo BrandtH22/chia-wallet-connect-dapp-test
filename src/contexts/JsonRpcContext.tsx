@@ -99,6 +99,7 @@ interface IContext {
     testSignMessageByAddress: TRpcRequestCallback;
     testSignMessageById: TRpcRequestCallback;
     testGetWalletSyncStatus: TRpcRequestCallback;
+    testGetNFTs: TRpcRequestCallback;
   };
   rpcResult?: IFormattedRpcResponse | null;
   isRpcRequestPending: boolean;
@@ -918,6 +919,34 @@ export function JsonRpcContextProvider({
             method,
             params: {
               fingerprint: address,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    testGetNFTs: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_GET_NFTS;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              walletIds: [3, 4, 5, 8],
+              num: 100,
+              startIndex: 0,
             },
           },
         });
