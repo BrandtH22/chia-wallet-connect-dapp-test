@@ -92,6 +92,8 @@ interface IContext {
     testSignTransactions: TRpcRequestCallback;
   };
   chiaRpc: {
+    testGetWallets: TRpcRequestCallback;
+    testGetCATWalletInfo: TRpcRequestCallback;
     testSendTransaction: TRpcRequestCallback;
     testSpendCAT: TRpcRequestCallback;
     testNewAddress: TRpcRequestCallback;
@@ -100,6 +102,7 @@ interface IContext {
     testSignMessageById: TRpcRequestCallback;
     testGetWalletSyncStatus: TRpcRequestCallback;
     testGetNFTs: TRpcRequestCallback;
+    testCreateOfferForIds: TRpcRequestCallback;
   };
   rpcResult?: IFormattedRpcResponse | null;
   isRpcRequestPending: boolean;
@@ -742,6 +745,59 @@ export function JsonRpcContextProvider({
   };
 
   const chiaRpc = {
+    testGetWallets: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_GET_WALLETS;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              includeData: false,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    testGetCATWalletInfo: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_GET_CAT_WALLET_INFO;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              assetId:
+                "f17f88130c63522821f1a75466849354eee69c414c774bd9f3873ab643e9574d",
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
     testSendTransaction: _createJsonRpcRequestHandler(
       async (
         chainId: string,
@@ -947,6 +1003,31 @@ export function JsonRpcContextProvider({
               walletIds: [3, 4, 5, 8],
               num: 100,
               startIndex: 0,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    testCreateOfferForIds: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_CREATE_OFFER_FOR_IDS;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
             },
           },
         });

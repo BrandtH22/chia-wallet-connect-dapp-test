@@ -245,6 +245,16 @@ const Home: NextPage = () => {
   };
 
   const getChiaActions = (): AccountAction[] => {
+    const onGetWallets = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testGetWallets(chainId, address);
+    };
+
+    const onGetCATWalletInfo = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testGetCATWalletInfo(chainId, address);
+    };
+
     const onSendTransaction = async (chainId: string, address: string) => {
       openRequestModal();
       await chiaRpc.testSendTransaction(chainId, address);
@@ -285,7 +295,20 @@ const Home: NextPage = () => {
       await chiaRpc.testGetNFTs(chainId, address);
     };
 
+    const onCreateOfferForIds = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testCreateOfferForIds(chainId, address);
+    };
+
     return [
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_GET_WALLETS,
+        callback: onGetWallets,
+      },
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_GET_CAT_WALLET_INFO,
+        callback: onGetCATWalletInfo,
+      },
       {
         method: DEFAULT_CHIA_METHODS.CHIA_SEND_TRANSACTION,
         callback: onSendTransaction,
@@ -317,6 +340,10 @@ const Home: NextPage = () => {
       {
         method: DEFAULT_CHIA_METHODS.CHIA_GET_NFTS,
         callback: onGetNFTs,
+      },
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_CREATE_OFFER_FOR_IDS,
+        callback: onCreateOfferForIds,
       },
     ];
   };
