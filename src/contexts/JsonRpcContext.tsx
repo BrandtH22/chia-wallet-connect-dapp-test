@@ -92,6 +92,8 @@ interface IContext {
     testSignTransactions: TRpcRequestCallback;
   };
   chiaRpc: {
+    testGetWallets: TRpcRequestCallback;
+    testGetCATWalletInfo: TRpcRequestCallback;
     testSendTransaction: TRpcRequestCallback;
     testSpendCAT: TRpcRequestCallback;
     testNewAddress: TRpcRequestCallback;
@@ -99,7 +101,10 @@ interface IContext {
     testSignMessageByAddress: TRpcRequestCallback;
     testSignMessageById: TRpcRequestCallback;
     testGetWalletSyncStatus: TRpcRequestCallback;
+    testGetNFTInfo: TRpcRequestCallback;
     testGetNFTs: TRpcRequestCallback;
+    testTakeOffer: TRpcRequestCallback;
+    testCreateOfferForIds: TRpcRequestCallback;
   };
   rpcResult?: IFormattedRpcResponse | null;
   isRpcRequestPending: boolean;
@@ -742,6 +747,59 @@ export function JsonRpcContextProvider({
   };
 
   const chiaRpc = {
+    testGetWallets: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_GET_WALLETS;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              includeData: false,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    testGetCATWalletInfo: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_GET_CAT_WALLET_INFO;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              assetId:
+                "f17f88130c63522821f1a75466849354eee69c414c774bd9f3873ab643e9574d",
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
     testSendTransaction: _createJsonRpcRequestHandler(
       async (
         chainId: string,
@@ -931,6 +989,33 @@ export function JsonRpcContextProvider({
         };
       }
     ),
+    testGetNFTInfo: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_GET_NFT_INFO;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              coinId:
+                "0xcbca6b5c01d25273a1d173fd6ea759e0db42a6551d66143bab0be61df7e2e74f",
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
     testGetNFTs: _createJsonRpcRequestHandler(
       async (
         chainId: string,
@@ -947,6 +1032,65 @@ export function JsonRpcContextProvider({
               walletIds: [3, 4, 5, 8],
               num: 100,
               startIndex: 0,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    testTakeOffer: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_TAKE_OFFER;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              offer:
+                "offer1qqr83wcuu2rykcmqvpsxvgqqcfz3ax9lz9sshv6f87766v9elfvk4mq7pu94rhtr0dm4ehmp0xf0xtzvrk7f6wj6lw8adl4rkhlk3mflttacl4h7lur64as8zlhqhn8h04883476dz7x6mny6jzdcga33n4s8n884cxcekcemz6mk3jk4v924mrr0krnqnmjjzrw93l9y95jmy6rmc7ehclg20h8mumnh02ndeuhuxldp2nzk3z5z38hnugj9v6qjw54su6lh6a92e586jpultw4z9a7uz4dl09kz7dvwhraaxt83e08gqe2exx6l0dkxjrhxg2mh0jfd2vd0a3k684lnkvwd0hmwluu4300x3veuvgz607sug55sykzf4ygv8gvl7auxuhdpft96wa9d8clpww5605ux9vp0039k0cs05l8rdcawka3xe3yd9ct3shp0qx8ln58yqvcuzg9jtsqf8dsh6jhryz7l0mm78qmm5uudjd7uf9eaul8y04p8lpzg4kuafm09zedxhel7tastpct0jtkg0rrrvtewf6kclzezcycvwehhgr0y3kdwcf4q4rwlm7h9s0mp7j548sppyra90h9rwknnd9uem92aw822nmm5fghjluj6wtm6pmz26s979lhfygza5fvp6pzshsmkjqpnnspwt8sn504aeslktzvastqmaha7p4xh3m9dj24ewfym4haxrcg7ev70syfvt62lu053npg9y5j3dkj6a855n9tf39v6n90ff82e2jg95657twge56jj27f9ex5c2f24vkzuvehe9y642j2egc55tfteq5yjnp4evmrtt7vfzhuc2es689jcjpt6m95k2ef9myj7jjvfl2uhjwve0ttwdpjxrfjhjztquaz5c7pkv579es9hua3f0l0daydaajx8036c7hh42nyjje53cnfjm90xz2wn7hlhu5306y6yndt5f4t8qlsl6quepxxv5m3re5p4t9cq3zwve3vwrltae8yz78fffa7h984x9jhsc000nlppyl63mnn302hl4vj048egmkpqtm4l9ahnla2y3an0nkcl8umrd28t775n9wah43wnes88hn6uhevcj7hhdg5hvk35chvrf3wss32asvmk0pv8dlll38fm3hla3nndupa4h6shtz7mvnpt0humn5ek92x8jx2tg9qyk5qse98mmlyld7r0wkktj5kpyz3ey8gm5m7lzdacqtej7afe8yswnn9hykz5jrmxfa7j38p4s62rt0t0xhfmxd3jm6l4qs46gfkd06c7hswpdhze7e0dsyka69jkjc9xzdthsmktu9d3cqd35qm4rehuhx7xdsj07nkrjmk07g6r6dlruu3nd7t4hkpcwuyt46acppxf4vu7akneezy5gmc607csrq4krtqvjy2l7l7pl870dhkxlqkmke7tl42kremfalkzg4a8kvhnck7ewpculul60u2j70l7murqs49pq7dluzlchtxjdm0lctnlx5nml0pzs0e85l4clj6c48rnc937wt6vhau9f4xj4q9tahlz7zrcwwgl3jw9em89098tynym90l5frdeflvmadx24eujpgltlgcstcazp26dthzqunr4tlvpvgdea2vvl3lm46mdem460m7keqh4nmk9wmh3f0ermstqhzse73dqahlaek7w4llp7k3d4w2mmjzd70p2kgt9jx956v0hl39cfzs0aj2f9hdmwwqldqdcg47zcejxzuwa08ju0pu89nsmxaqunmpgl68fxhrwkdhjchn4gt6yv4826v7fvhc7e8ntlwm4zn8d0tjw80xlh3vd2s2qp3wtwtsu27etv",
+              fee: 0,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    testCreateOfferForIds: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_CREATE_OFFER_FOR_IDS;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              walletIdsAndAmounts: {
+                17: -1_234,
+                "38a0dd823db068c6169e1e7e060e6a386031b9b145510d5a9b4610212383fbe9": 1,
+              },
+              driverDict: {},
+              disableJSONFormatting: true,
             },
           },
         });
