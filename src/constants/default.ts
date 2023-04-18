@@ -85,7 +85,9 @@ export enum DEFAULT_CHIA_METHODS {
   CHIA_SIGN_MESSAGE_BY_ADDRESS = "chia_signMessageByAddress",
   CHIA_SIGN_MESSAGE_BY_ID = "chia_signMessageById",
   CHIA_GET_WALLET_SYNC_STATUS = "chia_getSyncStatus",
+  CHIA_GET_NFT_INFO = "chia_getNFTInfo",
   CHIA_GET_NFTS = "chia_getNFTs",
+  CHIA_TAKE_OFFER = "chia_takeOffer",
   CHIA_CREATE_OFFER_FOR_IDS = "chia_createOfferForIds",
 }
 
