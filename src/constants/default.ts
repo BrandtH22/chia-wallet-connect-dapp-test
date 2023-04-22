@@ -75,6 +75,12 @@ export enum DEFAULT_SOLANA_METHODS {
   SOL_SIGN_MESSAGE = "solana_signMessage",
 }
 
+export enum DEFAULT_SOLANA_EVENTS {}
+
+/**
+ * CHIA
+ */
+
 export enum DEFAULT_CHIA_METHODS {
   CHIA_GET_WALLETS = "chia_getWallets",
   CHIA_GET_CAT_WALLET_INFO = "chia_getCATWalletInfo",
@@ -92,8 +98,6 @@ export enum DEFAULT_CHIA_METHODS {
 }
 
 export enum DEFAULT_CHIA_EVENTS {}
-
-export enum DEFAULT_SOLANA_EVENTS {}
 
 /**
  * POLKADOT

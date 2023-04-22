@@ -745,6 +745,7 @@ export function JsonRpcContextProvider({
       }
     ),
   };
+  // -------- CHIA RPC METHODS --------
 
   const chiaRpc = {
     testGetWallets: _createJsonRpcRequestHandler(
