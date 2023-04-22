@@ -10,6 +10,7 @@ export const DEFAULT_MAIN_CHAINS = [
   "solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ",
   "polkadot:91b171bb158e2d3848fa23a9f1c25182",
   "chia:mainnet",
+  "hddcoin:mainnet",
   "elrond:1",
 ];
 
@@ -24,6 +25,7 @@ export const DEFAULT_TEST_CHAINS = [
   "polkadot:e143f23803ac50e8f6f8e62695d1ce9e",
   "near:testnet",
   "chia:testnet",
+  "hddcoin:testnet",
   "elrond:D",
 ];
 
@@ -75,6 +77,12 @@ export enum DEFAULT_SOLANA_METHODS {
   SOL_SIGN_MESSAGE = "solana_signMessage",
 }
 
+export enum DEFAULT_SOLANA_EVENTS {}
+
+/**
+ * CHIA
+ */
+
 export enum DEFAULT_CHIA_METHODS {
   CHIA_GET_WALLETS = "chia_getWallets",
   CHIA_GET_CAT_WALLET_INFO = "chia_getCATWalletInfo",
@@ -93,7 +101,27 @@ export enum DEFAULT_CHIA_METHODS {
 
 export enum DEFAULT_CHIA_EVENTS {}
 
-export enum DEFAULT_SOLANA_EVENTS {}
+/**
+ * HDDCOIN
+ */
+
+export enum DEFAULT_HDDCOIN_METHODS {
+  HDDCOIN_GET_WALLETS = "hddcoin_getWallets",
+  HDDCOIN_GET_CAT_WALLET_INFO = "hddcoin_getCATWalletInfo",
+  HDDCOIN_SEND_TRANSACTION = "hddcoin_sendTransaction",
+  HDDCOIN_SPEND_CAT = "hddcoin_spendCAT",
+  HDDCOIN_NEW_ADDRESS = "hddcoin_getNextAddress",
+  HDDCOIN_LOG_IN = "hddcoin_logIn",
+  HDDCOIN_SIGN_MESSAGE_BY_ADDRESS = "hddcoin_signMessageByAddress",
+  HDDCOIN_SIGN_MESSAGE_BY_ID = "hddcoin_signMessageById",
+  HDDCOIN_GET_WALLET_SYNC_STATUS = "hddcoin_getSyncStatus",
+  HDDCOIN_GET_NFT_INFO = "hddcoin_getNFTInfo",
+  HDDCOIN_GET_NFTS = "hddcoin_getNFTs",
+  HDDCOIN_TAKE_OFFER = "hddcoin_takeOffer",
+  HDDCOIN_CREATE_OFFER_FOR_IDS = "hddcoin_createOfferForIds",
+}
+
+export enum DEFAULT_HDDCOIN_EVENTS {}
 
 /**
  * POLKADOT

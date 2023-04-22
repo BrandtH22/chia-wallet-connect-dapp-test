@@ -10,6 +10,7 @@ import { SolanaChainData } from "../chains/solana";
 import { PolkadotChainData } from "../chains/polkadot";
 import { ElrondChainData } from "../chains/elrond";
 import { ChiaChainData } from "../chains/chia";
+import { HddcoinChainData } from "../chains/hddcoin";
 
 import { ChainNamespaces, getAllChainNamespaces } from "../helpers";
 import { NearChainData } from "../chains/near";
@@ -53,6 +54,8 @@ export function ChainDataContextProvider({
             chains = ElrondChainData;  
           } else if (namespace === "chia") {
             chains = ChiaChainData;  
+          } else if (namespace === "hddcoin") {
+                      chains = HddcoinChainData;
           } else {
             chains = await apiGetChainNamespace(namespace);
           }

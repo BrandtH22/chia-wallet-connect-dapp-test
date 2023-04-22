@@ -12,6 +12,8 @@ import {
   DEFAULT_NEAR_EVENTS,
   DEFAULT_CHIA_METHODS,
   DEFAULT_CHIA_EVENTS,
+  DEFAULT_HDDCOIN_METHODS,
+  DEFAULT_HDDCOIN_EVENTS,
   DEFAULT_ELROND_EVENTS,
   DEFAULT_ELROND_METHODS,
 } from "../constants";
@@ -40,6 +42,8 @@ export const getSupportedMethodsByNamespace = (namespace: string) => {
       return Object.values(DEFAULT_POLKADOT_METHODS);
     case "chia":
       return Object.values(DEFAULT_CHIA_METHODS);
+    case "hddcoin":
+          return Object.values(DEFAULT_HDDCOIN_METHODS);
     case "near":
       return Object.values(DEFAULT_NEAR_METHODS);
     case "elrond":
@@ -63,6 +67,8 @@ export const getSupportedEventsByNamespace = (namespace: string) => {
       return Object.values(DEFAULT_NEAR_EVENTS);
     case "chia":
       return Object.values(DEFAULT_CHIA_EVENTS);
+    case "hddcoin":
+          return Object.values(DEFAULT_HDDCOIN_EVENTS);
     case "elrond":
       return Object.values(DEFAULT_ELROND_EVENTS);
     default:

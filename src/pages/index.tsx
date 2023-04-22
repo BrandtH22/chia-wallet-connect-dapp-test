@@ -17,6 +17,7 @@ import {
   DEFAULT_TEST_CHAINS,
   DEFAULT_NEAR_METHODS,
   DEFAULT_CHIA_METHODS,
+  DEFAULT_HDDCOIN_METHODS,
 } from "../constants";
 import { AccountAction, setLocaleStorageTestnetFlag } from "../helpers";
 import Toggle from "../components/Toggle";
@@ -75,6 +76,7 @@ const Home: NextPage = () => {
     nearRpc,
     elrondRpc,
     chiaRpc,
+    hddcoinRpc,
     isRpcRequestPending,
     rpcResult,
     isTestnet,
@@ -366,6 +368,128 @@ const Home: NextPage = () => {
     ];
   };
 
+const getHddcoinActions = (): AccountAction[] => {
+    const onGetWallets = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testGetWallets(chainId, address);
+    };
+
+    const onGetCATWalletInfo = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testGetCATWalletInfo(chainId, address);
+    };
+
+    const onSendTransaction = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testSendTransaction(chainId, address);
+    };
+
+    const onSpendCAT = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testSpendCAT(chainId, address);
+    };
+
+    const onNewAddress = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testNewAddress(chainId, address);
+    };
+
+    const onLogIn = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testLogIn(chainId, address);
+    };
+
+    const onSignMessageByAddress = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testSignMessageByAddress(chainId, address);
+    };
+
+    const onSignMessageById = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testSignMessageById(chainId, address);
+    };
+
+    const onGetWalletSyncStatus = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testGetWalletSyncStatus(chainId, address);
+    };
+
+    const onGetNFTInfo = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testGetNFTInfo(chainId, address);
+    };
+
+    const onGetNFTs = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testGetNFTs(chainId, address);
+    };
+
+    const onTakeOffer = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testTakeOffer(chainId, address);
+    };
+
+    const onCreateOfferForIds = async (chainId: string, address: string) => {
+      openRequestModal();
+      await hddcoinRpc.testCreateOfferForIds(chainId, address);
+    };
+
+    return [
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_GET_WALLETS,
+        callback: onGetWallets,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_GET_CAT_WALLET_INFO,
+        callback: onGetCATWalletInfo,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_SEND_TRANSACTION,
+        callback: onSendTransaction,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_SPEND_CAT,
+        callback: onSpendCAT,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_NEW_ADDRESS,
+        callback: onNewAddress,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_LOG_IN,
+        callback: onLogIn,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_SIGN_MESSAGE_BY_ADDRESS,
+        callback: onSignMessageByAddress,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_SIGN_MESSAGE_BY_ID,
+        callback: onSignMessageById,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_GET_WALLET_SYNC_STATUS,
+        callback: onGetWalletSyncStatus,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_GET_NFT_INFO,
+        callback: onGetNFTInfo,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_GET_NFTS,
+        callback: onGetNFTs,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_TAKE_OFFER,
+        callback: onTakeOffer,
+      },
+      {
+        method: DEFAULT_HDDCOIN_METHODS.HDDCOIN_CREATE_OFFER_FOR_IDS,
+        callback: onCreateOfferForIds,
+      },
+    ];
+  };
+
   const getElrondActions = (): AccountAction[] => {
     const onSignTransaction = async (chainId: string, address: string) => {
       openRequestModal();
@@ -410,6 +534,8 @@ const Home: NextPage = () => {
         return getNearActions();
       case "chia":
         return getChiaActions();
+      case "hddcoin":
+        return getHddcoinActions();
       case "elrond":
         return getElrondActions();
       default:
