@@ -1,3 +1,8 @@
+# Reminder
+Before using this repo, please make sure **DEFAULT_CHIA_METHODS** in `src/constants/default.ts` is a subset of exposed methods of the Chia wallet. Otherwise, the dApp will fail to connect to the Chia wallet without throwing any exceptions.
+
+For the Chia wallet 1.7.1, please refer to [WalletConnectCommands](https://github.com/Chia-Network/chia-blockchain-gui/blob/5702b3f60c92aa68c30676179b79c94e2192247c/packages/gui/src/constants/WalletConnectCommands.tsx).
+
 # Warning
 This sample project is intended for demonstration purposes only and should not be used for production code.
 
