@@ -105,6 +105,7 @@ interface IContext {
     testGetNFTs: TRpcRequestCallback;
     testTakeOffer: TRpcRequestCallback;
     testCreateOfferForIds: TRpcRequestCallback;
+    testUnknownTestCommand: TRpcRequestCallback;
   };
   rpcResult?: IFormattedRpcResponse | null;
   isRpcRequestPending: boolean;
@@ -1087,6 +1088,37 @@ export function JsonRpcContextProvider({
               fingerprint: address,
               walletIdsAndAmounts: {
                 17: -1_234,
+                "38a0dd823db068c6169e1e7e060e6a386031b9b145510d5a9b4610212383fbe9": 1,
+              },
+              driverDict: {},
+              disableJSONFormatting: true,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    testUnknownTestCommand: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_UNKNOWN_TEST_COMMAND;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              test: {
+                "amount": 1,
                 "38a0dd823db068c6169e1e7e060e6a386031b9b145510d5a9b4610212383fbe9": 1,
               },
               driverDict: {},

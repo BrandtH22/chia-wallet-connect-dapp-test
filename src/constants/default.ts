@@ -89,6 +89,7 @@ export enum DEFAULT_CHIA_METHODS {
   CHIA_GET_NFTS = "chia_getNFTs",
   CHIA_TAKE_OFFER = "chia_takeOffer",
   CHIA_CREATE_OFFER_FOR_IDS = "chia_createOfferForIds",
+  CHIA_UNKNOWN_TEST_COMMAND = "chia_unknownTestCommand",
 }
 
 export enum DEFAULT_CHIA_EVENTS {}

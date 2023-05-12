@@ -310,6 +310,11 @@ const Home: NextPage = () => {
       await chiaRpc.testCreateOfferForIds(chainId, address);
     };
 
+    const onUnknownTestCommand = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testUnknownTestCommand(chainId, address);
+    };
+
     return [
       {
         method: DEFAULT_CHIA_METHODS.CHIA_GET_WALLETS,
@@ -362,6 +367,10 @@ const Home: NextPage = () => {
       {
         method: DEFAULT_CHIA_METHODS.CHIA_CREATE_OFFER_FOR_IDS,
         callback: onCreateOfferForIds,
+      },
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_UNKNOWN_TEST_COMMAND,
+        callback: onUnknownTestCommand,
       },
     ];
   };
