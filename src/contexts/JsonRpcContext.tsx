@@ -106,6 +106,8 @@ interface IContext {
     testTakeOffer: TRpcRequestCallback;
     testCreateOfferForIds: TRpcRequestCallback;
     testUnknownTestCommand: TRpcRequestCallback;
+    testShowOfferDataNotification: TRpcRequestCallback;
+    testShowAnnouncementNotification: TRpcRequestCallback;
   };
   rpcResult?: IFormattedRpcResponse | null;
   isRpcRequestPending: boolean;
@@ -1135,6 +1137,74 @@ export function JsonRpcContextProvider({
         };
       }
     ),
+    testShowOfferDataNotification: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const offers = [
+          'offer1qqr83wcuu2rykcmqvpsxzgqqemhmlaekcenaz02ma6hs5w600dhjlvfjn477nkwz369h88kll73h37fefnwk3qqnz8s0lle0urdv0ntp27et7m86s8rmywl8rvld5udz2axnsnlxdwx7lw5a6erdh25pf24x5alshmgfv0rpwe5majfhahf7wf60vnc8elw3afaf3aw7cqsvv8v3lad5tvche3sqqkanl457a4ancgw4hqnhyumme7evh9mva7j8p6alefs6886x5xwuu8d0t9lnn9rt0urtu6w3jwcvkck4wkld009kemm0k76ecr26cxv5whq7wh7cw3y7mqe93aydxm0yvxm05wxm05wxmd5wxrfa8kxndhhg6auqx9lwp0x0wl2w0rta569ud4hxf4yyms3mrr8tq0xw0tsd3nd3nk94hdr9d2c24tkgdms9lwh9n9m78qrel8t2u0akeylv4m6mtrmhm8aaa8d4elcvmt5xkhg25q4esgduu6lscqrxlk8eftwv5jldm00xsuadjd9j8he7wadwykn3ud34tnfjcw8jk9e72kk7vh4jhnhu3kmd59rrk0g096ude9strwls2xwsqp5mpl2lgz5wmaaln8s3pvycyk5que9gxyg7mx3x6c25p9fklut6culrv57z0mtsndslvarpk67uhdnnwd5ylhc7ncjmw2yy58gjtr43qk5v4lhls247lc5l5jkdnhxt77jcg46anjpajcvjanwzkmsaka9kvwg5j749kwjzztl07pgd39ul4rv0d66waravu8l09s3xvne5hpwadg7axmghxyhkz9agmrslvlup04q7xn5p4lus7kpeg00mshe62lew3lkku4a3mnfle3ll4edqa6sc4z8lf58rxxl79u5ts6lqlx8rh68jn2pdj0f0h0z43pgvvs095txax707kmkh8tqhw6dhspmpz650l405p2z9qckyf95ptjke2u4lllxnkl2f7hx9k3m7ez28kvnnax7drk4l2wnls75z8z9lhjmuytpt8xtp5d5q8xqyqczzrucjutnk0ppa87me0u7sk7fwvmm6rwlnzj8086mxnnw23573lkexmpd7ss263fq2x3jm323jm3w3jm3xsjm3kjjlsla555ud55suagkut60p6fxz5vu9977nms7ya46djs6nvhw3cwd3zz25k5uu9lh0ut4a0hpfnxp9hkf2w6enhawne7hrerz7725c94zahlcttnpftaf8qmkus7ajland0d48uek6nn39ghue0h6xlmul6u0278mnm89s5evw8eyt000maepewml2r8u042fvswh3ykeavzk70elw6w4h5w389h7mz0l3wjpdeex0lmhms7ah2ek74ndcl84er4jalm8xwtcxz20r75yehxmm7a0gzdn2zewpylnflmmhx602ucfe2um843jrk2dmd0hgtkylvkrmetyjeueyadlsy64q23dge5pmtrycvcw5zaurnd66qcqsupuf4m0sk768k7mel0sul7lc3772lyh7x4ghqsk8ta6mmj0uf6ptrpzvq2mv9wq0w8wxgxrpax22c8sdhs45x7zvj4acjagfqdgtmj0lzmvm82gvjz8y3qls5mldhklkradtvwucx4rh2k7alhnpdzd4hk0dzvhmavlnlen9d34jq0h4fuuh968ljwszcfkkje9576c5wuwahnghlcj7z5pq37xwd55t5uw5ktaap0wnva7nhnwd2dmhe36rnerp7ad7cka7s7x8lsvyraxd0xqrs490mf6d0eed4ukjmn5vw7mdstnz0dc7hhcruvf2tlt55c6tnx6hnm7f9d4szl6ru8cqr0k6j6',
+          'offer1qqr83wcuu2rykcmqvpsxygqqemhmlaekcenaz02ma6hs5w600dhjlvfjn477nkwz369h88kll73h37fefnwk3qqnz8s0lle0lzshdh4w3z5jnfd9vr922ag9t0z2dmwuhjn03fzx463wze5w5q7cvs8tzeug3m7wwvkmqnhw24uay8fwmeldh2hcsfe3ymmdel9d5hw6p4n98jh7k7txgpt4xzq2mxwhmq66xkwn395nw7mx0ntwlwz8fn495jn7fy83n63auajfgk60a0c4ck097sew5900fal3dduurk895jtnu7cc34wywn78cvx96xzgjvgzrfacev8ggvd0yxua9qve628e8ua9zvsyya9zq6tmg87j4glql4mj704cw7dfxmwnn5j00h28ecnlg3uccj99hh2w06c62eh7luzs7zjwr00q50ch6n6w9uwpnmhm7nelzmma46hwvty20jlexruc40l5ssz770u59fusvfqufraevma5umg0yw3th032557aawt9ch8xkljwcswmj4g2hyqt3lg7jxw6yjqdr6veuyan6q6w7q93d7xwpuhlxr6evtnkpv80kahsx5678w47f2n9eynwklsclrrnyne7qn930f0lpujxf9y5zs29h60tu7je29yhustjtf48atjkfen9adn3dfq4avnjtfj4y6jkvfjhrzteg4g65u27v9nyvu2esfyhu7jpvxuejsjkwfexyudfnf5mu6vj0x4yza2jfxnxzcj7wfcerxv4dx2ka2d43x8fzhj2tleluqznyzngqv2scqm6xp35zsw04ewer7g27k437zku98se3gxvwm88t565muml7s4je6y0w6wvhla07l6n9mgx0zf574v4vut7mmls8hj57gdvsd9qmusg8j6dc4u6pywfugfppxvmk8sxulafg7yx8ld35gul6vm2tul850rn2ah6ajr455r7z5ujx5ttezmcq79l2l6amelw4zc7ehet20m7deh9p40d2dnhvm2mhdug9nteaw2ukve0thhuv5ky3e8w8g0y5ngkn0x3dy7q9mhe8uag63mv8ngkwxs02tmp6h0a4fe062sxayg0t7ctf6w8ww54dlcm23d6utn7vs6pc4mfhm4f4dqefsw2xx6za6hgwnvwsaxc5z0sa760u7hdsq4xa7tla2twxn4hxuwjl0t4ge8ttgder9zsluuxmvkxkwdtga87qlnjpj56rzlcp8xhsq3kkrwmp54xpqeh4s4m8t870kewmht739hc7um6vlhrwn67djud98mfm8y6ms5xh6r9lmahasxth3f8av0pja6ma8k0er0t0ds22csr9t6e7u9vl40lqlqdnldfz2hmu5vhzja4wucj3z3ljyh4xr3eh0l6pjhfkvqhxe4alyqhvxtgrs9wccrq7vxvfqyd7qkjqd86ptys4sq7r4qe2gxr3yc7a0laluzj0r70mhr077nhea7fz7thkuygs6f2033tk2ak723vawhvurjmzngmcdsnjaj8mnlff9a2vmm9km30uexlk5ajaeh0slkdxahnvjrm95kkc7jjjrgl2mdeye8l0tdau54kwhcdwpvm9aguwlamv6fu89mgjreuryemdevx4m7e8al566yjhrlx735nexd0zp3nx3wptm3eryhj8amtm6m6uykhjkd8qzs7m72mk7wz6c',
+          'offer1qqr83wcuu2rykcmqvpsxygqqemhmlaekcenaz02ma6hs5w600dhjlvfjn477nkwz369h88kll73h37fefnwk3qqnz8s0lle0npc0fqmxvh9emwaxm9a7ak28agj7uenvvwlkchjk0m3d3s30354n80cqj4z02dfytuu8a8jmgfkhhl7zllmm6tp8yat5mc96cen4zknmdehkz6k0lltf9t9qpcrtqdfmhy3799j8etzhy98m8jal2mdkekv6yntmqve3y6a9nyu84l0ke22cw7w73wv8ckh2wxnh49awt8t0mtejmunff255hecapnk6de6xe7lx38gdscuyg50a9yxlapzvn6zye8larzvjyyu9zqjfmv9754ceqhhm77l3cx7a88rvn0hzfw008eeragflcgj9dh82wmegktf470lj7kr42dsgyn7akvxlealu3u6y4h90hel7f5g8xejudr29a654xl7aktltec8asafztnuqsspknhlj3htpckj7vaj4whr44faamy5te07fd8padza3y6s4wtsnzw3agwdsgvp685ehefm8cqyhasgzmlu7ze07y997c8qv7m7lvmtqef4k092uk5kdjexapupl7k8xexrkp7dz7nlcrpyvj2fgyc3t0h7medyju2f0egky732tm8xvh3k0mnyzk330mfxykn92f4xvus9w8y4jft3mfskustk2cq5nunefe4rzywfm9e8vcnjygg7nwnfneu6yj0629zjy60x29e8uys3j85e26d986y6txw7c9085lurmcszxq9k6pqnpgq8kvtrckcjvawf4el9n9pf485slgl0ssmr2v06lue2vcmrlnfu9mctdecwkpap5u5p8m9jg2w0k2908ul7nlczdykhcznqrlgxn9wxu2jwqwx5e9shqrydery9kv44apmltl25fxwn74dl5mus087j0dxcc2zs4923yyryhx349dff7snzl40ewdull23v0vmua58elxum636hk4yemhd4dt57vre4u7h9wtxvh4emkx2tzg7nlz5rj6t5rfhhgxs0qralur7wuvgeknm5r8rg898acatn72kuhu9vrwjy04lg9yl8rh8w2klud5gja79el8gdqv2a5ma7565sv5c89rpdpwat58fk8gwnv6p8c0ld8wdtkcqwn7a9l74phnt6mjw8fl44j4vn44kx5sj4g07wrvk0rt9x45whlsde3qe2d3305pnntczgmtphdqc2mpsgm6624j4hl8mvlvm4lcjmuwwdax0mekfe0xewwnna5anj9vc2rtlp6la6mw6rdmc5nwk8cewadw3m0a3h48kc99vgpjhay7wxklchaslavte7g6j5uu2kcjdacwm4uuly3uqttfqdtuahyvl464n0df9v7gfsf0qwx58qqup3keaqqekqgmupy9ga0jzkqpmx3z92qjv5urr3laklltuswadhs70k7u9tl3uyd66ymk6407ku6hhjhcnhre36svm8na7wl548crxtxxemxaylwav866d6la6g346jsaqt278la0afat8ad22tp49h022akz6g30aart9z4ndnta0u6caygjhsjec6uztlmnj7dajcdd3urv4a6dee50lcqjlrng9jx2fqh00aset4gdwa79rhxnqvzm9w30f29hg04ml6gyvcqtqhl64q078tkf',
+        ];
+
+        const method = DEFAULT_CHIA_METHODS.CHIA_SHOW_NOTIFICATION;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              type: 'offer',
+              // use random item from offers list
+              offerData: offers[Math.floor(Math.random() * offers.length)],
+              driverDict: {},
+              disableJSONFormatting: true,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    testShowAnnouncementNotification: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_SHOW_NOTIFICATION;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              type: 'announcement',
+              message: 'This is a test announcement',
+              url: 'https://www.chia.net',
+              allFingerprints: true,
+              driverDict: {},
+              disableJSONFormatting: true,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+    
   };
 
   // -------- NEAR RPC METHODS --------

@@ -315,6 +315,18 @@ const Home: NextPage = () => {
       await chiaRpc.testUnknownTestCommand(chainId, address);
     };
 
+    const onShowOfferDataNotification = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testShowOfferDataNotification(chainId, address);
+    };
+
+    const onShowAnnouncementNotification = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testShowAnnouncementNotification(chainId, address);
+    };
+
+    
+
     return [
       {
         method: DEFAULT_CHIA_METHODS.CHIA_GET_WALLETS,
@@ -371,6 +383,14 @@ const Home: NextPage = () => {
       {
         method: DEFAULT_CHIA_METHODS.CHIA_UNKNOWN_TEST_COMMAND,
         callback: onUnknownTestCommand,
+      },
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_SHOW_NOTIFICATION,
+        callback: onShowOfferDataNotification,
+      },      
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_SHOW_NOTIFICATION,
+        callback: onShowAnnouncementNotification,
       },
     ];
   };

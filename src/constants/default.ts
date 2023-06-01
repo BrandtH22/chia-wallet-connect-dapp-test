@@ -90,6 +90,7 @@ export enum DEFAULT_CHIA_METHODS {
   CHIA_TAKE_OFFER = "chia_takeOffer",
   CHIA_CREATE_OFFER_FOR_IDS = "chia_createOfferForIds",
   CHIA_UNKNOWN_TEST_COMMAND = "chia_unknownTestCommand",
+  CHIA_SHOW_NOTIFICATION = "chia_showNotification",
 }
 
 export enum DEFAULT_CHIA_EVENTS {}
