@@ -300,6 +300,16 @@ const Home: NextPage = () => {
       await chiaRpc.testGetNFTs(chainId, address);
     };
 
+    const onMintNFT = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testMintNFT(chainId, address);
+    };
+
+    const onTransferNFT = async (chainId: string, address: string) => {
+      openRequestModal();
+      await chiaRpc.testTransferNFT(chainId, address);
+    };
+
     const onTakeOffer = async (chainId: string, address: string) => {
       openRequestModal();
       await chiaRpc.testTakeOffer(chainId, address);
@@ -371,6 +381,14 @@ const Home: NextPage = () => {
       {
         method: DEFAULT_CHIA_METHODS.CHIA_GET_NFTS,
         callback: onGetNFTs,
+      },
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_MINT_NFT,
+        callback: onMintNFT,
+      },
+      {
+        method: DEFAULT_CHIA_METHODS.CHIA_TRANSFER_NFT,
+        callback: onTransferNFT,
       },
       {
         method: DEFAULT_CHIA_METHODS.CHIA_TAKE_OFFER,

@@ -87,6 +87,8 @@ export enum DEFAULT_CHIA_METHODS {
   CHIA_GET_WALLET_SYNC_STATUS = "chia_getSyncStatus",
   CHIA_GET_NFT_INFO = "chia_getNFTInfo",
   CHIA_GET_NFTS = "chia_getNFTs",
+  CHIA_MINT_NFT = "chia_mintNFT",
+  CHIA_TRANSFER_NFT = "chia_transferNFT",
   CHIA_TAKE_OFFER = "chia_takeOffer",
   CHIA_CREATE_OFFER_FOR_IDS = "chia_createOfferForIds",
   CHIA_UNKNOWN_TEST_COMMAND = "chia_unknownTestCommand",

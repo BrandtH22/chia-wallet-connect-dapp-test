@@ -103,6 +103,8 @@ interface IContext {
     testGetWalletSyncStatus: TRpcRequestCallback;
     testGetNFTInfo: TRpcRequestCallback;
     testGetNFTs: TRpcRequestCallback;
+    testMintNFT: TRpcRequestCallback;
+    testTransferNFT: TRpcRequestCallback;
     testTakeOffer: TRpcRequestCallback;
     testCreateOfferForIds: TRpcRequestCallback;
     testUnknownTestCommand: TRpcRequestCallback;
@@ -1047,6 +1049,76 @@ export function JsonRpcContextProvider({
         };
       }
     ),
+    testMintNFT: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_MINT_NFT;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              walletId: 5,
+              royaltyAddress: "txch1jq2l8p89t4td2ezghhgfyrdff976rr5cgwff24pmw8qjmgxctv6qvaq6d7",
+              royaltyPercentage: 0,
+              targetAddress: "txch1jq2l8p89t4td2ezghhgfyrdff976rr5cgwff24pmw8qjmgxctv6qvaq6d7",
+              uris: ["https://bafybeihc23hgmftnmqfrsqboc5tsrgacfwmk4oqpe2hlqj7pixw7acqgey.ipfs.nftstorage.link/1.png"],
+              hash: "8ef2795bdc6d132fcdf0cea951388df6a918f00dac84207e7765624eb12cfb6b",
+              metaUris: ["https://bafkreidacnw3hxj66i2onbev3jcf2dpq4wxny36xzaxrq4j7hral2f5p5u.ipfs.nftstorage.link"],
+              metaHash: "60136db3dd3ef234e68495da445d0df0e5aedc6fd7c82f18713f3c40bd17afed",
+              licenseUris: ["https://bafkreifq5bv3u3lciwcfupc4v6ezjxoyg4jfcvkcp2do43bdaswawqutim.ipfs.nftstorage.link"],
+              licenseHash: "b0e86bba6d6245845a3c5caf8994ddd837125155427e86ee6c2304ac0b429343",
+              editionNumber: 1,
+              editionCount: 1,
+              didId: "did:chia:1h8dmsp6h2hvd9hlpqdh7ts3dvgwdfkywau2f46wnqeg625fvnxhq7rudn2",
+              fee: 1,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+
+    testTransferNFT: _createJsonRpcRequestHandler(
+      async (
+        chainId: string,
+        address: string
+      ): Promise<IFormattedRpcResponse> => {
+        const method = DEFAULT_CHIA_METHODS.CHIA_TRANSFER_NFT;
+        const result = await client!.request({
+          topic: session!.topic,
+          chainId,
+          request: {
+            method,
+            params: {
+              fingerprint: address,
+              walletId: 4,
+              nftCoinIds: ["8483e93f3d526ccadb522dfce727a3dbf605e3666fbc9fc97370e5656bc99206"],
+              targetAddress: "txch1jq2l8p89t4td2ezghhgfyrdff976rr5cgwff24pmw8qjmgxctv6qvaq6d7",
+              fee: 0,
+            },
+          },
+        });
+
+        return {
+          method,
+          address,
+          valid: true,
+          result: JSON.stringify(result),
+        };
+      }
+    ),
+
     testTakeOffer: _createJsonRpcRequestHandler(
       async (
         chainId: string,
